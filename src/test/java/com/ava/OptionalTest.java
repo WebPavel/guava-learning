@@ -1,7 +1,6 @@
 package com.ava;
 
 import com.google.common.base.Optional;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import org.junit.Test;
 
 import java.util.Set;
