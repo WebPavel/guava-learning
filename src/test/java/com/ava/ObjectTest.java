@@ -1,6 +1,7 @@
 package com.ava;
 
 import com.google.common.base.Objects;
+import com.google.common.primitives.Ints;
 import org.junit.Test;
 
 public class ObjectTest {
@@ -31,14 +32,73 @@ public class ObjectTest {
         System.out.println(Objects.hashCode(person));
         System.out.println(Objects.hashCode(person));
     }
+
+    @Test
+    public void testToString() {
+        System.out.println(Objects.toStringHelper(this).add("x",1).toString());
+        System.out.println(Objects.toStringHelper(Person.class).add("x",1).toString());
+
+        Person person = new Person("lily",18);
+        String result = Objects.toStringHelper(Person.class)
+                .add("name",person.getName())
+                .add("age",person.getAge()).toString();
+        System.out.println(result);
+    }
+
+    @Test
+    public void testCompare() {
+        Person person = new Person("lucy",23);
+        Person person1 = new Person("kangkang",23);
+        Person person2 = new Person("lucy",19);
+        Person person3 = new Person("linda",20);
+        System.out.println(person.compareTo(person1));
+        System.out.println(person.compareTo(person2));
+        System.out.println(person.compareTo(person3));
+        System.out.println(person2.compareTo(person3));
+        int numI = 'i';
+        int numU = 'u';
+        System.out.println(numU-numI);
+        System.out.println(Ints.compare(9,10));
+    }
 }
 
-class Person {
+class Person implements Comparable<Person>{
     private String name;
     private int age;
 
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        int cmpName = name.compareTo(other.getName());
+        if (cmpName != 0) {
+            return cmpName;
+        }
+        if (age > other.getAge()) {
+            return 1;
+        }
+        if (age < other.getAge()) {
+            return  -1;
+        }
+        return 0;
     }
 }
